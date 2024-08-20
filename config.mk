@@ -17,6 +17,21 @@ PRODUCT_PACKAGES += \
     SystemUIClocks-Metro \
     SystemUIClocks-NumOverlap
 
+
+TARGET_INCLUDE_BOOT_ANIMATIONS ?= true
+ifeq ($(TARGET_INCLUDE_BOOT_ANIMATIONS),true)
+include vendor/infinity/bootanimation/prebuilts/prebuilts.mk
+endif
+ifeq ($(TARGET_INCLUDE_BOOT_ANIMATIONS),true)
+PRODUCT_PRODUCT_PROPERTIES += ro.boot.custom_bootanim=true
+else
+PRODUCT_PRODUCT_PROPERTIES += ro.boot.custom_bootanim=false
+endif
+TARGET_SCREEN_WIDTH ?= 1080
+TARGET_SCREEN_HEIGHT ?= 1920
+PRODUCT_PACKAGES += \
+    bootanimation.zip
+
 ifneq ($(WITH_GMS),true)
     PRODUCT_COPY_FILES += \
         vendor/extras/product/etc/sysconfig/ambient_data.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/ambient_data.xml \
